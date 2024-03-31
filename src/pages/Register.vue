@@ -11,6 +11,7 @@
             label="Name"
             required
             prepend-inner-icon="mdi-account"
+            :error-messages="errorMessages?.name"
           ></v-text-field>
           <v-text-field
             v-model="record.email"
@@ -19,6 +20,7 @@
             label="Email"
             required
             prepend-inner-icon="mdi-email"
+            :error-messages="errorMessages?.email"
           ></v-text-field>
           <v-text-field
             v-model="record.password"
@@ -28,6 +30,7 @@
             required
             type="password"
             prepend-inner-icon="mdi-lock"
+            :error-messages="errorMessages?.password"
           ></v-text-field>
           <v-text-field
             v-model="record.password_confirmation"
@@ -37,6 +40,7 @@
             required
             type="password"
             prepend-inner-icon="mdi-lock"
+            :error-messages="errorMessages?.password"
           ></v-text-field>
           <v-btn class="mt-4" block color="primary" @click="submitRegister">
             Submit
@@ -74,7 +78,8 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
           // if (error.response && error.response.status === 422) {
-          this.errorMessages = error.response.data.message;
+          // this.errorMessages = error.response.data.message;
+          this.errorMessages = error?.response.data.errors;
           // }
         });
     },

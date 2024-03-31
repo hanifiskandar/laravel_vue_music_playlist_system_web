@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h3 class="text-center pb-2">Login Page</h3>
-    <p class="text-center" style="color:red">{{ errorMessages }}</p>
+    <!-- <p class="text-center" style="color:red">{{ errorMessages }}</p> -->
     <form @submit.prevent="submitLogin">
       <v-row justify="center">
         <v-col cols="12" sm="6" md="4">
@@ -12,6 +12,7 @@
             label="Email"
             required
             prepend-inner-icon="mdi-email"
+            :error-messages="errorMessages?.email"
           ></v-text-field>
           <v-text-field
             v-model="record.password"
@@ -21,6 +22,7 @@
             required
             type="password"
             prepend-inner-icon="mdi-lock"
+            :error-messages="errorMessages?.password"
           ></v-text-field>
           <v-btn class="mt-4" block color="primary" @click="submitLogin">
             Submit
@@ -51,7 +53,6 @@ export default {
           password: this.record.password,
         })
         .then((response) => {
-          console.log("RESTEST: ", response);
           this.$router.push("/");
 
           // if(response.status === 204){
@@ -66,7 +67,9 @@ export default {
           console.log("boom");
           console.error("Error:", error);
           // if (error.response && error.response.status === 422) {
-          this.errorMessages = error.response.data.message;
+          // this.errorMessages = error.response.data.message;
+          this.errorMessages = error?.response.data.errors;
+
           // }
         });
     },
